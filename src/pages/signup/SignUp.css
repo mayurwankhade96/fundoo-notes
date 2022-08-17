@@ -1,0 +1,61 @@
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-div {
+  width: 750px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 3rem 2.5rem 2.25rem;
+  display: flex;
+}
+
+.left-div {
+  width: 55%;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.name-inputs,
+.password-inputs {
+  display: flex;
+  gap: 0.5rem;
+  padding-top: 1.5rem;
+}
+
+.email-input {
+  padding-top: 1.5rem;
+}
+
+.buttons {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons .btn {
+  text-transform: none;
+}
+
+.right-div {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 3rem;
+}
+
+.right-div p {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 300;
+  color: #202124;
+  padding: 0 0.5rem;
+}
