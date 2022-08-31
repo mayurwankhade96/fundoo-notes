@@ -20,6 +20,18 @@ code {
     monospace;
 }
 
+.form-center {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-logo {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
 .form-heading {
   font-size: 1.5rem;
   color: #202124;
@@ -31,4 +43,16 @@ code {
   font-size: 0.75rem;
   color: rgba(0, 0, 0, 0.6);
   margin: 0 0.8rem;
+}
+
+.css-j204z7-MuiFormControlLabel-root .MuiFormControlLabel-label {
+  font-size: 14px;
+  color: #202124;
+}
+
+.buttons {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1.25rem;
 }
