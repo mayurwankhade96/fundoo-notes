@@ -26,7 +26,7 @@ const SignIn = () => {
 
     axios
       .post(
-        "http://fundoonotes.incubation.bridgelabz.com/api/user/login",
+        "http://fundoonotes.incubation.bridgelabz.com/api/user/login/",
         payload
       )
       .then((res) => {
