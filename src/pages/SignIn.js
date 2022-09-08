@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import styles from "./SignIn.module.css";
+import React, { useState, useEffect, useRef } from "react";
+import styles from "../styles/SignIn.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../../components/Logo";
+import Logo from "../components/Logo";
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
 
 const SignIn = () => {
@@ -13,7 +13,12 @@ const SignIn = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const inputRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    inputRef.current.childNodes[1].childNodes[0].focus();
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,6 +71,7 @@ const SignIn = () => {
                 <TextField
                   type='email'
                   label='Email'
+                  ref={inputRef}
                   variant='outlined'
                   fullWidth
                   value={signInUser.email}
