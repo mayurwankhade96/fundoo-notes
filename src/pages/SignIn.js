@@ -1,32 +1,46 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import styles from "../styles/SignIn.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import signinReducer from "../reducers/signinReducer";
+
+const initialState = {
+  email: "",
+  password: "",
+  isPasswordShown: false,
+  isLoading: false,
+  error: "",
+};
 
 const SignIn = () => {
-  const [signInUser, setSignInUser] = useState({
-    email: "",
-    password: "",
-    showPassword: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [state, dispatch] = useReducer(signinReducer, initialState);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+
+  const { email, password, isPasswordShown, isLoading, error } = state;
 
   useEffect(() => {
     inputRef.current.childNodes[1].childNodes[0].focus();
   }, []);
 
+  const handleInput = (e) => {
+    dispatch({
+      type: "HANDLE_INPUT",
+      field: e.target.name,
+      value: e.target.value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    dispatch({ type: "SUBMIT" });
 
     const payload = {
-      email: signInUser.email,
-      password: signInUser.password,
+      email: email,
+      password: password,
     };
 
     axios
@@ -36,25 +50,20 @@ const SignIn = () => {
       )
       .then((res) => {
         console.log(res);
-        setLoading(false);
-        setError("");
+        dispatch({ type: "SUCCESS" });
         navigate("/home");
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
-        setError("Something went wrong");
+        dispatch({ type: "ERROR" });
       });
 
-    setSignInUser({
-      email: "",
-      password: "",
-    });
+    dispatch({ type: "RESET" });
   };
 
   return (
     <div>
-      {loading ? (
+      {isLoading ? (
         "Please wait..."
       ) : (
         <div className='form-center'>
@@ -71,47 +80,47 @@ const SignIn = () => {
                 <TextField
                   type='email'
                   label='Email'
+                  name='email'
                   ref={inputRef}
                   variant='outlined'
                   fullWidth
-                  value={signInUser.email}
-                  onChange={(e) =>
-                    setSignInUser({ ...signInUser, email: e.target.value })
-                  }
+                  value={email}
+                  onChange={(e) => handleInput(e)}
                 ></TextField>
               </div>
+
               <div className={styles.formControl}>
                 <TextField
-                  type={signInUser.showPassword ? "text" : "password"}
+                  type={isPasswordShown ? "text" : "password"}
                   label='Enter your password'
+                  name='password'
                   variant='outlined'
                   fullWidth
-                  value={signInUser.password}
-                  onChange={(e) =>
-                    setSignInUser({ ...signInUser, password: e.target.value })
-                  }
+                  value={password}
+                  onChange={(e) => handleInput(e)}
                 ></TextField>
               </div>
+
               <div>
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onChange={(e) =>
-                        setSignInUser({
-                          ...signInUser,
-                          showPassword: e.target.checked,
-                        })
+                      checked={isPasswordShown}
+                      onChange={() =>
+                        dispatch({ type: "TOGGLE_PASSWORD_VISIBILITY" })
                       }
                     />
                   }
                   label='Show password'
                 />
               </div>
+
               {/* <div>
               <Button className={styles.btn} variant='text'>
                 <Link to='/password-recover'>Forgot password?</Link>
               </Button>
             </div> */}
+
               <div className='buttons'>
                 <Button className={styles.btn} variant='text'>
                   <Link to='/signup'>Create account</Link>

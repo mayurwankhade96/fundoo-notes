@@ -1,37 +1,61 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import styles from "../styles/SignUp.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import signupReducer from "../reducers/signupReducer";
+
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  service: "advance",
+  isPasswordShown: false,
+  isLoading: false,
+  error: "",
+};
 
 const SignUp = () => {
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    service: "advance",
-    showPassword: false,
-  });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [state, dispatch] = useReducer(signupReducer, initialState);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    service,
+    isPasswordShown,
+    isLoading,
+    error,
+  } = state;
 
   useEffect(() => {
     inputRef.current.childNodes[1].childNodes[0].focus();
   }, []);
 
+  const handleInput = (e) => {
+    dispatch({
+      type: "HANDLE_INPUT",
+      field: e.target.name,
+      value: e.target.value,
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+
+    dispatch({ type: "SUBMIT" });
+
     const payload = {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      password: user.password,
-      service: user.service,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      service: service,
     };
 
     axios
@@ -40,29 +64,21 @@ const SignUp = () => {
         payload
       )
       .then((res) => {
-        setLoading(false);
-        setError("");
+        console.log(res);
+        dispatch({ type: "SUCCESS" });
         navigate("/signin");
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
-        setError("Something went wrong");
+        dispatch({ type: "ERROR" });
       });
 
-    setUser({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      service: "advance",
-      showPassword: false,
-    });
+    dispatch({ type: "RESET" });
   };
 
   return (
     <div>
-      {loading ? (
+      {isLoading ? (
         "Please wait..."
       ) : (
         <div className='form-center'>
@@ -75,53 +91,52 @@ const SignUp = () => {
                   <TextField
                     type='text'
                     label='First name'
+                    name='firstName'
                     ref={inputRef}
                     variant='outlined'
                     size='small'
-                    value={user.firstName}
-                    onChange={(e) =>
-                      setUser({ ...user, firstName: e.target.value })
-                    }
+                    value={firstName}
+                    onChange={(e) => handleInput(e)}
                   />
                   <TextField
                     type='text'
                     label='Last name'
+                    name='lastName'
                     variant='outlined'
                     size='small'
-                    value={user.lastName}
-                    onChange={(e) =>
-                      setUser({ ...user, lastName: e.target.value })
-                    }
+                    value={lastName}
+                    onChange={(e) => handleInput(e)}
                   />
                 </div>
+
                 <div className={styles.emailInput}>
                   <TextField
                     type='email'
                     label='Username'
+                    name='email'
                     variant='outlined'
                     fullWidth
                     size='small'
                     helperText='You can use letters, numbers & periods'
-                    value={user.email}
-                    onChange={(e) =>
-                      setUser({ ...user, email: e.target.value })
-                    }
+                    value={email}
+                    onChange={(e) => handleInput(e)}
                   />
                 </div>
+
                 <div className={styles.passwordInputs}>
                   <TextField
-                    type={user.showPassword ? "text" : "password"}
+                    type={isPasswordShown ? "text" : "password"}
                     label='Password'
+                    name='password'
                     variant='outlined'
                     size='small'
-                    value={user.password}
-                    onChange={(e) =>
-                      setUser({ ...user, password: e.target.value })
-                    }
+                    value={password}
+                    onChange={(e) => handleInput(e)}
                   />
                   <TextField
-                    type={user.showPassword ? "text" : "password"}
+                    type={isPasswordShown ? "text" : "password"}
                     label='Confirm'
+                    name='confirm'
                     variant='outlined'
                     size='small'
                   />
@@ -130,18 +145,21 @@ const SignUp = () => {
                   Use 8 or more characters with a mix of letters, numbers &
                   symbols
                 </div>
+
                 <div>
                   <FormControlLabel
                     control={
                       <Checkbox
-                        onChange={(e) =>
-                          setUser({ ...user, showPassword: e.target.checked })
+                        checked={isPasswordShown}
+                        onChange={() =>
+                          dispatch({ type: "TOGGLE_PASSWORD_VISIBILITY" })
                         }
                       />
                     }
                     label='Show password'
                   />
                 </div>
+
                 <div className='buttons'>
                   <Button className={styles.btn} variant='text'>
                     <Link to='/signin'>Sign in instead</Link>
@@ -156,6 +174,7 @@ const SignUp = () => {
                 </div>
               </form>
             </div>
+
             <div className={styles.rightDiv}>
               <img
                 src='https://ssl.gstatic.com/accounts/signup/glif/account.svg'
