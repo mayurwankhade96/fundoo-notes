@@ -92,9 +92,11 @@ const SignUp = () => {
                     type='text'
                     label='First name'
                     name='firstName'
+                    required
                     ref={inputRef}
                     variant='outlined'
                     size='small'
+                    error={false}
                     value={firstName}
                     onChange={(e) => handleInput(e)}
                   />
@@ -102,6 +104,7 @@ const SignUp = () => {
                     type='text'
                     label='Last name'
                     name='lastName'
+                    required
                     variant='outlined'
                     size='small'
                     value={lastName}
@@ -114,6 +117,7 @@ const SignUp = () => {
                     type='email'
                     label='Username'
                     name='email'
+                    required
                     variant='outlined'
                     fullWidth
                     size='small'
@@ -128,6 +132,7 @@ const SignUp = () => {
                     type={isPasswordShown ? "text" : "password"}
                     label='Password'
                     name='password'
+                    required
                     variant='outlined'
                     size='small'
                     value={password}
@@ -137,6 +142,7 @@ const SignUp = () => {
                     type={isPasswordShown ? "text" : "password"}
                     label='Confirm'
                     name='confirm'
+                    required
                     variant='outlined'
                     size='small'
                   />

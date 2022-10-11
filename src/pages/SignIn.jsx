@@ -49,9 +49,10 @@ const SignIn = () => {
         payload
       )
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         dispatch({ type: "SUCCESS" });
         navigate("/home");
+        localStorage.setItem("token", res.data.id);
       })
       .catch((err) => {
         console.log(err);
@@ -81,6 +82,7 @@ const SignIn = () => {
                   type='email'
                   label='Email'
                   name='email'
+                  required
                   ref={inputRef}
                   variant='outlined'
                   fullWidth
@@ -94,6 +96,7 @@ const SignIn = () => {
                   type={isPasswordShown ? "text" : "password"}
                   label='Enter your password'
                   name='password'
+                  required
                   variant='outlined'
                   fullWidth
                   value={password}
