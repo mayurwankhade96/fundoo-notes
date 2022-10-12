@@ -13,47 +13,36 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-const Sidebar = () => {
+const menuItems = [
+  { name: "Notes", icon: <LightbulbOutlinedIcon /> },
+  { name: "Reminders", icon: <NotificationsOutlinedIcon /> },
+  { name: "Edit labels", icon: <EditOutlinedIcon /> },
+  { name: "Archive", icon: <ArchiveOutlinedIcon /> },
+  { name: "Bin", icon: <DeleteOutlineOutlinedIcon /> },
+];
+
+const Sidebar = (props) => {
+  const { isDrawerOpen } = props;
+
   return (
-    <Box>
-      <Drawer variant='permanent'>
+    <>
+      <Drawer variant='permanent' open={isDrawerOpen}>
         <Toolbar />
-        <Box>
+        <Box sx={{ width: isDrawerOpen ? 280 : 80, whiteSpace: "nowrap" }}>
           <List>
-            <ListItemButton>
-              <ListItemIcon>
-                <LightbulbOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Notes' />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <NotificationsOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Reminders' />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <EditOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Edit labels' />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <ArchiveOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Archive' />
-            </ListItemButton>
-            <ListItemButton>
-              <ListItemIcon>
-                <DeleteOutlineOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary='Bin' />
-            </ListItemButton>
+            {menuItems.map((menu, index) => (
+              <ListItemButton key={index}>
+                <ListItemIcon sx={{ px: 1.5 }}>{menu.icon}</ListItemIcon>
+                <ListItemText
+                  primary={menu.name}
+                  sx={{ opacity: isDrawerOpen ? 1 : 0 }}
+                />
+              </ListItemButton>
+            ))}
           </List>
         </Box>
       </Drawer>
-    </Box>
+    </>
   );
 };
 

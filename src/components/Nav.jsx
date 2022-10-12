@@ -16,7 +16,9 @@ import { Link } from "react-router-dom";
 import keep from "../assets/keep_2020q4_48dp.png";
 import styles from "../styles/Nav.module.css";
 
-const Nav = () => {
+const Nav = (props) => {
+  // console.log(props);
+  const { isDrawerOpen, setIsDrawerOpen } = props;
   return (
     // <nav className={styles.navbar}>
 
@@ -66,7 +68,12 @@ const Nav = () => {
       <Toolbar className={styles.navbar}>
         <div className={styles.leftDiv}>
           <Tooltip title='Main menu'>
-            <IconButton sx={{ mr: 0.5 }} size='large' edge='start'>
+            <IconButton
+              sx={{ mr: 0.5 }}
+              size='large'
+              edge='start'
+              onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+            >
               <MenuIcon />
             </IconButton>
           </Tooltip>
