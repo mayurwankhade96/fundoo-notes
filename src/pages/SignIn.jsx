@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from "react";
+import React, { useReducer } from "react";
 import styles from "../styles/SignIn.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,14 +16,9 @@ const initialState = {
 
 const SignIn = () => {
   const [state, dispatch] = useReducer(signinReducer, initialState);
-  const inputRef = useRef(null);
   const navigate = useNavigate();
 
   const { email, password, isPasswordShown, isLoading, error } = state;
-
-  useEffect(() => {
-    inputRef.current.childNodes[1].childNodes[0].focus();
-  }, []);
 
   const handleInput = (e) => {
     dispatch({
@@ -83,7 +78,7 @@ const SignIn = () => {
                   label='Email'
                   name='email'
                   required
-                  ref={inputRef}
+                  autoFocus
                   variant='outlined'
                   fullWidth
                   value={email}

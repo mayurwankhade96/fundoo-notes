@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useRef } from "react";
+import React, { useReducer } from "react";
 import styles from "../styles/SignUp.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,7 +19,6 @@ const initialState = {
 
 const SignUp = () => {
   const [state, dispatch] = useReducer(signupReducer, initialState);
-  const inputRef = useRef(null);
   const navigate = useNavigate();
 
   const {
@@ -32,10 +31,6 @@ const SignUp = () => {
     isLoading,
     error,
   } = state;
-
-  useEffect(() => {
-    inputRef.current.childNodes[1].childNodes[0].focus();
-  }, []);
 
   const handleInput = (e) => {
     dispatch({
@@ -93,7 +88,7 @@ const SignUp = () => {
                     label='First name'
                     name='firstName'
                     required
-                    ref={inputRef}
+                    autoFocus
                     variant='outlined'
                     size='small'
                     error={false}

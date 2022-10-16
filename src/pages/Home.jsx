@@ -2,6 +2,7 @@ import { Box, Toolbar } from "@mui/material";
 import { useState } from "react";
 import CreateNote from "../components/CreateNote";
 import Nav from "../components/Nav";
+import Notes from "../components/Notes";
 import Sidebar from "../components/Sidebar";
 
 const Home = () => {
@@ -17,6 +18,7 @@ const Home = () => {
       >
         <Toolbar />
         <CreateNote />
+        <Notes />
       </Box>
     </Box>
   );
