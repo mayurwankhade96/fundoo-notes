@@ -18,7 +18,6 @@ const Notes = () => {
           },
         }
       );
-
       console.log(response.data.data.data);
     } catch (e) {
       console.log(e);

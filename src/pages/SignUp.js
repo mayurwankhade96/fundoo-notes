@@ -1,9 +1,13 @@
 import React, { useReducer } from "react";
-import styles from "../styles/SignUp.module.css";
-import axios from "axios";
+
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../components/Logo";
+
+import axios from "axios";
+
 import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+
+import styles from "../styles/SignUp.module.css";
+import Logo from "../components/Logo";
 import signupReducer from "../reducers/signupReducer";
 
 const initialState = {

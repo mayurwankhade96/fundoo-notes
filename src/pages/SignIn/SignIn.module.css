@@ -1,0 +1,25 @@
+.formContainer {
+  min-height: 100vh;
+  display: flex;
+}
+
+.form {
+  min-height: 500px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 3em 2.5em 2.25em;
+}
+
+.formFields {
+  padding: 2rem 0 1.25rem;
+}
+
+.alert {
+  margin: 0.625rem 2.5rem 0;
+}
+
+@media (max-width: 601px) {
+  .form {
+    border: none;
+  }
+}

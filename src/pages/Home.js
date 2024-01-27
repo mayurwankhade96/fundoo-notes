@@ -1,5 +1,7 @@
-import { Box, Toolbar } from "@mui/material";
 import { useState } from "react";
+
+import { Box, Toolbar } from "@mui/material";
+
 import CreateNote from "../components/CreateNote";
 import Nav from "../components/Nav";
 import Notes from "../components/Notes";
