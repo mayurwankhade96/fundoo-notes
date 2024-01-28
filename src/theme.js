@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
   typography: {
     button: {
-      textTransform: "capitalize",
+      textTransform: "none",
     },
   },
 });

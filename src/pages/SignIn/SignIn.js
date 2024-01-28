@@ -38,7 +38,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className={styles.formContainer}>
+    <div className='form-container'>
       <Stack
         spacing={1}
         m={matches ? 0 : "auto"}
@@ -56,7 +56,7 @@ const SignIn = () => {
         )}
 
         <div className={styles.form}>
-          <Logo />
+          <Logo align='center' />
           <Typography variant='h5' align='center' mt='1rem'>
             Sign in
           </Typography>
@@ -98,9 +98,9 @@ const SignIn = () => {
               alignItems='center'
               mt={4}
             >
-              <Button onClick={onCreateAccountClick}>create account</Button>
+              <Button onClick={onCreateAccountClick}>Create account</Button>
               <Button variant='contained' disableElevation type='submit'>
-                next
+                Next
               </Button>
             </Stack>
           </Form>
