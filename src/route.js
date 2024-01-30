@@ -3,6 +3,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
 import { action as signInAction } from "./pages/SignIn/action";
+import { action as signUpAction } from "./pages/SignUp/action";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+    action: signUpAction,
   },
   {
     path: "/home",

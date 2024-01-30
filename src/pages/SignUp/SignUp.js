@@ -7,6 +7,7 @@ import {
   Stack,
   TextField,
   Typography,
+  useMediaQuery,
 } from "@mui/material";
 import styles from "./SignUp.module.css";
 import Logo from "../../components/Logo";
@@ -14,6 +15,8 @@ import Logo from "../../components/Logo";
 const SignUp = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const mediumDevice = useMediaQuery("(max-width:801px)");
+  const smallDevice = useMediaQuery("(max-width:601px)");
 
   const togglePasswordVisibility = (e) => {
     setIsPasswordVisible(e.target.checked);
@@ -29,17 +32,22 @@ const SignUp = () => {
         direction='row'
         width='100%'
         maxWidth='750px'
-        border='1px solid #dadce0'
+        border={mediumDevice ? "none" : "1px solid #dadce0"}
         borderRadius='8px'
         p='3rem 2.5rem 2.25rem'
-        m='auto'
+        m={mediumDevice ? 0 : "auto"}
       >
         <div className={styles.leftDiv}>
           <Logo align='left' />
           <Typography variant='h5'>Create your Fundoo Account</Typography>
-          <Form>
-            <Stack direction='row' spacing={1} pt={3}>
+          <Form method='POST'>
+            <Stack
+              direction={smallDevice ? "column" : "row"}
+              spacing={smallDevice ? 3 : 1}
+              pt={3}
+            >
               <TextField
+                fullWidth
                 type='text'
                 label='First name'
                 name='firstName'
@@ -50,6 +58,7 @@ const SignUp = () => {
               />
 
               <TextField
+                fullWidth
                 type='text'
                 label='Last name'
                 name='lastName'
@@ -71,8 +80,13 @@ const SignUp = () => {
               sx={{ mt: 3 }}
             />
 
-            <Stack direction='row' spacing={1} pt={3}>
+            <Stack
+              direction={smallDevice ? "column" : "row"}
+              spacing={smallDevice ? 3 : 1}
+              pt={3}
+            >
               <TextField
+                fullWidth
                 type={isPasswordVisible ? "text" : "password"}
                 label='Password'
                 name='password'
@@ -82,6 +96,7 @@ const SignUp = () => {
               />
 
               <TextField
+                fullWidth
                 type={isPasswordVisible ? "text" : "password"}
                 label='Confirm'
                 name='confirm'
@@ -122,6 +137,7 @@ const SignUp = () => {
           alignItems='center'
           pl='3rem'
           width='45%'
+          display={mediumDevice ? "none" : "flex"}
         >
           <img
             src='https://ssl.gstatic.com/accounts/signup/glif/account.svg'
