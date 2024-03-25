@@ -1,9 +1,9 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
 import Home from "./pages/Home";
-import { action as signInAction } from "./pages/SignIn/action";
-import { action as signUpAction } from "./pages/SignUp/action";
+import { action as signInAction } from "./pages/auth/SignIn/action";
+import { action as signUpAction } from "./pages/auth/SignUp/action";
 
 const router = createBrowserRouter([
   {

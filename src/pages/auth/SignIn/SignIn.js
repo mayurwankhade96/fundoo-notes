@@ -15,13 +15,15 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import Logo from "../../components/Logo";
 import styles from "./SignIn.module.css";
+import { LoadingButton } from "@mui/lab";
+import ErrorMessage from "../../../shared/components/ErrorMessage";
+import Logo from "../../../shared/components/Logo";
 
 const SignIn = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
-  const erros = useActionData();
+  const errors = useActionData();
   const matches = useMediaQuery("(max-width:601px)");
   const { state } = useNavigation();
 
@@ -33,7 +35,7 @@ const SignIn = () => {
     navigate("/signup");
   };
 
-  if (state === "submitting" || state === "loading") {
+  if (state === "loading") {
     return <div>Loading...</div>;
   }
 
@@ -45,13 +47,15 @@ const SignIn = () => {
         width='100%'
         maxWidth={matches ? "none" : "450px"}
       >
-        {erros?.emailPasswordMismatch && (
+        {(errors?.emailPasswordMismatch || errors?.serverError) && (
           <Alert
             color='error'
             severity='error'
             className={matches ? `${styles.alert}` : ""}
           >
-            {erros.emailPasswordMismatch}
+            {errors.emailPasswordMismatch
+              ? errors.emailPasswordMismatch
+              : errors.serverError}
           </Alert>
         )}
 
@@ -72,8 +76,15 @@ const SignIn = () => {
                 fullWidth
                 label='Email'
                 name='email'
-                required
                 type='email'
+                error={!!errors?.email}
+                helperText={
+                  errors?.email ? (
+                    <ErrorMessage>{errors.email}</ErrorMessage>
+                  ) : (
+                    ""
+                  )
+                }
               />
 
               <TextField
@@ -82,7 +93,14 @@ const SignIn = () => {
                 label='Enter your password'
                 name='password'
                 type={isPasswordVisible ? "text" : "password"}
-                required
+                error={!!errors?.password}
+                helperText={
+                  errors?.password ? (
+                    <ErrorMessage>{errors.password}</ErrorMessage>
+                  ) : (
+                    ""
+                  )
+                }
               />
             </Stack>
 
@@ -99,9 +117,14 @@ const SignIn = () => {
               mt={4}
             >
               <Button onClick={onCreateAccountClick}>Create account</Button>
-              <Button variant='contained' disableElevation type='submit'>
+              <LoadingButton
+                variant='contained'
+                disableElevation
+                type='submit'
+                loading={state === "submitting"}
+              >
                 Next
-              </Button>
+              </LoadingButton>
             </Stack>
           </Form>
         </div>

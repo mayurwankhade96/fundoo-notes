@@ -1,0 +1,34 @@
+.form {
+  display: flex;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 3rem 2.5rem 2.25rem;
+}
+
+.leftDiv {
+  width: 55%;
+}
+
+.helperText {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+  margin: 0 0.8rem;
+}
+
+.errorText {
+  color: #d32f2f;
+}
+
+.alert {
+  margin: 0.625rem 2.5rem 0;
+}
+
+@media (max-width: 801px) {
+  .form {
+    border: none;
+  }
+
+  .leftDiv {
+    width: 100%;
+  }
+}
